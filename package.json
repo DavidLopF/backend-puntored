@@ -1,0 +1,23 @@
+{
+  "name": "prueba-puntored",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "David Lopez",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-handlebars": "^6.0.4",
+    "express-validator": "^6.14.0",
+    "morgan": "^1.10.0",
+    "pg": "^8.7.3",
+    "request": "^2.81.0"
+  }
+}
