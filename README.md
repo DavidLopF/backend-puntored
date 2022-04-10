@@ -19,5 +19,4 @@
         DB_PORT=
         DB_DATABASE=
         
-        
-## Desarrollado por David Lopez
+
