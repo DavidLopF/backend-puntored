@@ -19,4 +19,7 @@
         DB_PORT=
         DB_DATABASE=
         
-
+3. El script de la base de datos esta en src/db/script.sql, de igual manera adjunto el diagrama de la base de datos
+ 
+     
+    <img src="./readme-imgs/Modelo Base de datos" width="150" height="150">
