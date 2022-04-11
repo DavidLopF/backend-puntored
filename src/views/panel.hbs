@@ -29,9 +29,11 @@
 
 <script>
 
+    if (localStorage.getItem('token') == null) {
+        localStorage.setItem('token', '{{token}}');
+        localStorage.setItem('user', '{{userId}}');
+    }
 
-    localStorage.setItem('token', '{{token}}');
-    localStorage.setItem('user', '{{userId}}');
     const recarga = document.getElementById('recarga');
     const historial = document.getElementById('historial');
     const rec = document.getElementById('rec');
