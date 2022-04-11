@@ -13,13 +13,10 @@
 
         PORT=5000
 
-        DB_USER=
-        DB_PASS=
-        DB_HOST=
-        DB_PORT=
-        DB_DATABASE=
         
 3. El script de la base de datos esta en src/db/script.sql, de igual manera adjunto el diagrama de la base de datos
  
      
     <img src="./readme-imgs/Modelo%20Base%20de%20datos.png" width="600" height="400">
+
+4. El codigo del frontend fue desarrollado con hbs y esta dentro de la carpeta src/views y al momento de correr el servidor se redenrizan las vistas. 
