@@ -1,35 +1,36 @@
-const { Pool } = require('pg');
+const pg = require('pg');
 const colors = require('colors');
+
 
 
 class PostgresConection {
     constructor() {
-
         try {
-            this.pool = new Pool({
-                user: process.env.DB_USER,
-                host: process.env.DB_HOST,
-                database: process.env.DB_DATABASE,
-                password: process.env.DB_PASS,
-                port: process.env.DB_PORT,
-            });
-        } catch (err) {
-            console.log(colors.red(err));
+            const conection = 'postgres://xgoaqvxghpezto:31f28209a5418053200c9e1600245a53408dcf7b36c67f61643495b69163be4b@ec2-34-194-158-176.compute-1.amazonaws.com:5432/d6516oupchpj20'
+            this.client = new pg.Client(conection);
+            
+        }catch (e) {
+            console.log(e);
         }
     }
 
     async getUser(username) {
-        const res = await this.pool.query(`SELECT * FROM public.user WHERE username = '${username}'`);
+        this.client.connect();
+        const res = await this.client.query(`SELECT * FROM public.user WHERE username = '${username}'`);
         if (res.rows.length > 0) {
             return res.rows[0];
+            this.client.end();
         } else {
             return false;
+            this.client.end();
         }
+       
     }
 
     async insertUser(username, password) {
-        await this.pool.query(`INSERT INTO public.user (username, password) VALUES ('${username}', '${password}')`);
-        if (this.pool.query) {
+        this.client.connect()
+        await this.client.query(`INSERT INTO public.user (username, password) VALUES ('${username}', '${password}')`);
+        if (this.client.query) {
             const get = await this.getUser(username);
             return get;
         } else {
@@ -107,7 +108,7 @@ class PostgresConection {
         }
     }
 
-    async getAllTicketsOfAprobacion() {
+    async getAllTicketsOfAproacion() {
         const res = await this.pool.query(`
         SELECT *
         FROM public.TRANSACTION 
