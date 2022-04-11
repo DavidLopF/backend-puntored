@@ -12,12 +12,15 @@ router.post("/buy", [
     check("amount", "ammout is empty").not().isEmpty(),
     check("phoneNumber", "phone number is empty").not().isEmpty(),
     check("supplierId", "supplier id is empty").not().isEmpty(),
-    validatePhoneNumber, 
+    validatePhoneNumber,
     validateAmount,
     validateData
 
 ],
     rechargeController.buy());
 
+
+router.get("/ticket",
+    rechargeController.getTicket());
 
 module.exports = router;

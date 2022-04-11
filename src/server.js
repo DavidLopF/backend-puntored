@@ -2,6 +2,7 @@ const express = require("express");
 const corse = require("cors");
 const logger = require('morgan');
 const colors = require('colors');
+const hbs = require('express-handlebars');
 
 class Server {
     constructor() {
@@ -27,6 +28,16 @@ class Server {
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: false }));
 
+        this.app.engine('hbs', hbs.engine({
+            extname: 'hbs',
+            defaultLayout: 'layout',
+            layoutsDir: __dirname + '/views/layouts/',
+            partialsDir: __dirname + '/views/partials/'
+        }));
+
+        this.app.set('view engine', 'hbs');
+        this.app.set('views', './src/views');
+
         this.app.use(express.static(__dirname + '/public'));
 
        
@@ -39,7 +50,7 @@ class Server {
         this.app.use(this.recharge, require('./routes/recharge'));
 
         this.app.get('/', (req, res) => {
-            res.render('home');
+            res.render('index');
         });
 
         this.app.use((req, res, next) => {

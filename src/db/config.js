@@ -30,7 +30,8 @@ class PostgresConection {
     async insertUser(username, password) {
         await this.pool.query(`INSERT INTO public.user (username, password) VALUES ('${username}', '${password}')`);
         if (this.pool.query) {
-            return true;
+            const get = await this.getUser(username);
+            return get;
         } else {
             return false;
         }
@@ -52,7 +53,7 @@ class PostgresConection {
         } else {
             return false;
         }
-        
+
     }
 
     async insertSupplier(supplier_id, supplier_name, supplier_logo) {

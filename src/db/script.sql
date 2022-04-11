@@ -29,7 +29,7 @@ CREATE TABLE public.TICKET (
     transaction_id VARCHAR(255) NOT NULL,
     ticket_number VARCHAR(255) NOT NULL,
     supplier_trans_id INTEGER NOT NULL,
-    amount INTEGER NOT NULL,
+         INTEGER NOT NULL,
     footer VARCHAR(255) NOT NULL,
     FOREIGN KEY (transaction_id) REFERENCES public.TRANSACTION(transaction_id),
     FOREIGN KEY (supplier_trans_id) REFERENCES public.SUPPLIER(supplier_id)

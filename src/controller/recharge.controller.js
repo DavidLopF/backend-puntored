@@ -1,3 +1,4 @@
+const { json } = require("express/lib/response");
 const request = require("request");
 const Database = require("../db/config");
 
@@ -7,6 +8,12 @@ class rechargeController {
 
     constructor() {
         this.database = new Database();
+    }
+
+    getTicket(){
+        return (req, res) => {
+            res.render("ticket");
+        }
     }
 
     buy() {
@@ -63,7 +70,11 @@ class rechargeController {
                             const resultTicket = await this.database.insertTicket(ticket);
 
                             if (resultTicket) {
-                                return res.status(200).send(body);
+                                return res.status(200).json({
+                                    message: "Compra exitosa",
+                                    body : responseServer
+                                });
+                        
                             } else {
                                 return res.status(500).send("Error generando el ticket");
                             }

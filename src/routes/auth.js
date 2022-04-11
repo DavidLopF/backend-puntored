@@ -5,7 +5,9 @@ const authController = new AuthController();
 
 
 
-router.post("/",  authController.login());
+router.post("/", authController.login());
+
+router.get("/", authController.getlogin());
 
 
 module.exports = router;

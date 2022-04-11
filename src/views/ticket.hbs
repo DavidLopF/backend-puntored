@@ -1,0 +1,150 @@
+<div class="is-centered animate__animated animate__fadeInUpBig">
+    <div class="columns is-centered">
+        <div class="box column is-half">
+            <div class=' equal-height has-text-centered '>
+
+                <figure><img src='https://revistapym.com.co/wp-content/uploads/2021/06/Punto-Red.png' width="200"
+                        height="200">
+                </figure>
+
+            </div>
+            <hr>
+            <div class="is-centered has-text-centered mb-5">
+                <span class="tag is-light">
+                    <h1 class="title is-5">Comprobante Recarga</h1>
+                </span>
+            </div>
+
+
+            <div class="columns mt-5">
+                <div class="column has-text-centered ">
+                    <h5 class="title is-5"> N° de aprobacion:</h5>
+                </div>
+                <div id="Aprobacion" class="column has-text-centered">
+                </div>
+            </div>
+
+            <div class="columns mt-5">
+                <div class="column has-text-centered ">
+                    <h5 class="title is-5"> Fecha:</h5>
+                </div>
+                <div id="fecha" class="column has-text-centered">
+                </div>
+            </div>
+
+            <div class="columns mt-5">
+                <div class="column has-text-centered ">
+                    <h5 class="title is-5"> Hora:</h5>
+                </div>
+                <div id="hora" class="column has-text-centered">
+                </div>
+            </div>
+
+            <div class="columns mt-5">
+                <div class="column has-text-centered ">
+                    <h5 class="title is-5"> Numero:</h5>
+                </div>
+                <div id="numero" class="column has-text-centered">
+                </div>
+            </div>
+
+            <div class="columns mt-5">
+                <div class="column has-text-centered ">
+                    <h5 class="title is-5"> Transaccion:</h5>
+                </div>
+                <div id="transaccion" class="column has-text-centered">
+                </div>
+            </div>
+
+            <div class="columns mt-5">
+                <div class="column has-text-centered ">
+                    <h5 class="title is-5"> Valor:</h5>
+                </div>
+                <div id="valor" class="column has-text-centered">
+                </div>
+            </div>
+
+            <div class="columns mt-6">
+                <div class="column has-text-centered ">
+                    <button class="button is-link" id="end">Terminar</button>
+                </div>
+            </div>
+
+
+
+            <div class="columns mt-5">
+                <div class="column has-text-centered ">
+                    <footer class="footer">
+                        <div class="content has-text-centered">
+                            <p id="foot">
+
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+    <script>
+
+        let ticket = localStorage.getItem('ticket');
+        ticket = JSON.parse(ticket)
+        ticket = ticket.body;
+        ticket = ticket.ticket;
+        const body = ticket.body;
+        const footer = ticket.footer;
+
+
+
+        console.log(footer);
+
+        const Aprobacion = document.getElementById('Aprobacion');
+        Aprobacion.innerHTML = `
+
+        <h5 class="subtitle is-5">${body.Aprobacion}</h5>
+            
+        `;
+
+        const fecha = document.getElementById('fecha');
+        fecha.innerHTML = `
+            <h5 class="subtitle is-5">${body.Fecha}</h5>
+        `;
+
+        const hora = document.getElementById('hora');
+        hora.innerHTML = `
+            <h5 class="subtitle is-5">${body.Hora}</h5>
+        `;
+
+        const numero = document.getElementById('numero');
+        numero.innerHTML = `
+            <h5 class="subtitle is-5">${body.Numero}</h5>
+        `;
+
+        const valor = document.getElementById('valor');
+        valor.innerHTML = `
+            <h5 class="subtitle is-5">${body.Valor}</h5>
+        `;
+
+        const transaccion = document.getElementById('transaccion');
+        transaccion.innerHTML = `
+            <h5 class="subtitle is-5">${body.Transaccion}</h5>
+        `;
+
+        const foot = document.getElementById('foot');
+        foot.innerHTML = `
+            ${footer}
+        `;
+
+        const end = document.getElementById('end');
+        end.addEventListener('click', () => {
+            window.location.href = '/';
+        });
+
+
+
+    </script>
+</div>

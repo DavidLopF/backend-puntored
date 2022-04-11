@@ -1,0 +1,219 @@
+    {{> card}}
+
+
+    <h1 class="title is-3 has-text-centered mt-5">{{message}}</h1>
+
+
+
+
+    <div class="columns is-centered">
+        <div class="column">
+            <div class="has-text-centered">
+                <button id="recarga" class="button is-link is-light mr-2">Hacer recarga</button>
+                <button id="historial" class="button is-link is-light ml-2">Ver historial</button>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </section>
+
+
+    <div id="rec">
+
+    </div>
+
+
+    </div>
+
+    <script>
+
+
+        localStorage.setItem('token', '{{token}}');
+        localStorage.setItem('user', '{{userId}}');
+        const recarga = document.getElementById('recarga');
+        const historial = document.getElementById('historial');
+        const rec = document.getElementById('rec');
+
+        recarga.addEventListener('click', () => {
+            rec.style.display = 'block';
+            rec.classList.add('box');
+            rec.classList.add('container');
+            rec.classList.add('animate__animated');
+            rec.classList.add('animate__fadeInUp');
+
+
+            rec.innerHTML = `
+                <div class="columns">
+                    <div class="column">
+                        <h3 class="title is-3">Ingresa los datos para tu recarga</h3>
+                    </div>
+                    <div class="column">
+                        <a>
+                            <span class="material-icons-outlined" id="close" style="float: right;">
+                                close
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <form>
+
+                    <div class="field">
+                        <label class="label">Numero de telefono</label>
+                        <div class="control">
+                            <input class="input" type="number"  id="number"placeholder="3008452244">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Monto</label>
+                        <div class="control">
+                            <input class="input" id="amount" type="amount" placeholder="1000">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Email</label>
+                        <div class="control">
+                            <select class="input" id="select-supliers">
+                                <option>
+                                    Selecciona una opción
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control has-text-centered mt-5 mb-5">
+                        <button id="doRec"  type="button" class="button is-primary is-light">Hacer recarga</button>
+                        </div>
+                    </div>
+                </form>
+                    `;
+
+            getSuppliers();
+
+            const doRec = document.getElementById('doRec');
+            doRec.addEventListener('click', () => {
+                const phoneNumber = document.querySelector('#number').value;
+                const amount = document.querySelector('#amount').value;
+                const supplierId = document.querySelector('select').value;
+                const token = localStorage.getItem('token');
+                const clientTransId = localStorage.getItem('user');
+                const url = 'http://localhost:5000/api/recharge/buy';
+                const headers = new Headers({
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json'
+                });
+                const init = {
+                    method: 'POST',
+                    headers: headers,
+                    mode: 'cors',
+                    cache: 'default',
+                    body: JSON.stringify({
+                        clientTransId: clientTransId,
+                        phoneNumber: phoneNumber,
+                        amount: amount,
+                        supplierId: supplierId
+                    })
+                };
+
+                if (validate(clientTransId, phoneNumber, amount, supplierId)) {
+
+                    fetch(url, init)
+                        .then(response => response.text())
+                        .then((result) => {
+                            localStorage.setItem('ticket', result);
+                            window.location.href = '/api/recharge/ticket';
+                        }).catch(error => console.log('error', error));
+                }
+            });
+
+
+
+
+
+
+            const close = document.getElementById('close');
+            close.addEventListener('click', () => {
+                //quitarle visibilidad al div con style
+                rec.style.display = 'none';
+
+            });
+
+        })
+
+        const validate = (clientTransId, phoneNumber, amount, supplierId) => {
+
+            if (!clientTransId) {
+                con
+                alert('El cliente es requerido');
+                return false;
+            } else if (!phoneNumber) {
+                alert('El numero de telefono es requerido');
+                return false;
+            } else if (!amount) {
+                alert('El monto es requerido');
+                return false;
+            } else if (!supplierId) {
+                alert('El proveedor es requerido');
+                return false;
+            } else if (supplierId == "Selecciona una opción") {
+                alert('El proveedor es requerido');
+                return false;
+            } else if (amount < 1000) {
+                alert('El monto debe ser mayor a 1000');
+                return false;
+            } else if (phoneNumber.length < 10 || phoneNumber.length > 10) {
+                alert('El numero de telefono debe tener 10 digitos');
+                return false;
+            } else if (phoneNumber.substring(0, 1) != 3) {
+                alert('El numero de telefono debe empezar con 3');
+                return false;
+            } else if (amount > 10000) {
+                alert('El monto debe ser mayor a 10000');
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+
+        const getSuppliers = async () => {
+            const token = localStorage.getItem('token');
+            const url = 'localhost:5000/api/supplier/all';
+            const headers = new Headers({
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            });
+            const init = {
+                method: 'GET',
+                headers: headers,
+                mode: 'cors',
+                cache: 'default'
+            };
+
+
+            fetch("http://localhost:5000/api/supplier/all", init)
+                .then(response => response.text())
+                .then((result) => {
+                    let res = JSON.parse(result);
+                    res = res.data.suppliers;
+                    res.forEach(element => {
+                        let option = document.createElement('option');
+                        option.value = element.supplierId;
+                        option.innerHTML = element.supplierName;
+                        document.getElementById('select-supliers').appendChild(option);
+                    });
+
+
+                }).catch(error => console.log('error', error));
+
+        };
+
+
+
+
+    </script>
