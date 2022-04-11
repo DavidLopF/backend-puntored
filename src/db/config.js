@@ -95,6 +95,30 @@ class PostgresConection {
             return false;
         }
     }
+
+    async getAllTransactionsOfUser(id) {
+
+        //traer todas las transacciones con el ticket
+        const res = await this.pool.query(`SELECT * FROM public.transaction WHERE user_id = '${id}'`);
+        if (res.rows.length > 0) {
+            return res.rows;
+        } else {
+            return false;
+        }
+    }
+
+    async getAllTicketsOfAprobacion() {
+        const res = await this.pool.query(`
+        SELECT *
+        FROM public.TRANSACTION 
+        LEFT JOIN public.ticket ON ticket.transaction_id = TRANSACTION.transaction_id
+        `);
+        if (res.rows.length > 0) {
+            return res.rows;
+        } else {
+            return false;
+        }
+    }
 }
 
 module.exports = PostgresConection;

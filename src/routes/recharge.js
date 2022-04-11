@@ -15,10 +15,15 @@ router.post("/buy", [
     validatePhoneNumber,
     validateAmount,
     validateData
-
 ],
     rechargeController.buy());
 
+
+router.get("/all/:id", rechargeController.getALLTransactions());
+
+router.get("/transactions", rechargeController.getViewTransactions());
+
+router.get("/panel", rechargeController.getViewPanel());
 
 router.get("/ticket",
     rechargeController.getTicket());

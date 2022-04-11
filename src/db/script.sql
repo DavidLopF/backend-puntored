@@ -35,6 +35,9 @@ CREATE TABLE public.TICKET (
     FOREIGN KEY (supplier_trans_id) REFERENCES public.SUPPLIER(supplier_id)
 );
 
+
+
+
 /*
     drop database
 */
@@ -42,4 +45,6 @@ DROP TABLE public.TICKET;
 DROP TABLE public.TRANSACTION;
 DROP TABLE public.USER ;
 DROP TABLE public.SUPPLIER;
+
+
 

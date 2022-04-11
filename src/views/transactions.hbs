@@ -1,0 +1,83 @@
+{{> card}}
+<section class="section">
+    <div class="columns is-centered">
+        <div class="column is-narrow box">
+            <table class="table has-text-centered">
+                <thead>
+                    <tr>
+                        <th><abbr title="ticket">Ticket id</abbr></th>
+                        <th><abbr title="transaction">Transaccion N°</abbr></th>
+                        <th><abbr title="number">Numero</abbr></th>
+                        <th><abbr title="prooverdor">Prooverdor</abbr></th>
+                        <th><abbr title="fecha">Fecha</abbr></th>
+                    </tr>
+                </thead>
+
+                <tbody id="data">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<div class="columns is-centered">
+    <div class="column">
+        <div class="has-text-centered mb-6">
+            <button id="volver" class="button is-link is-light mr-2">Volver</button>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+
+
+
+
+
+<script>
+    const transaccions = JSON.parse(localStorage.getItem('historial'));
+
+
+    const data = document.getElementById('data');
+
+    transaccions.body.forEach(transaccion => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${transaccion.ticket_id}</td>
+            <td>${transaccion.transaction_id}</td>
+            <td>${transaccion.ticket_number}</td>
+            <td>${transaccion.supplierName}</td>
+            <td>${transaccion.transaction_date}</td>
+        `;
+        data.appendChild(tr);
+    });
+
+    const volver = document.getElementById('volver');
+    volver.addEventListener('click', () => {
+        window.location.href = '/api/recharge/panel';
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

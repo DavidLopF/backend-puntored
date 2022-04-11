@@ -1,7 +1,5 @@
-const { json } = require("express/lib/response");
 const request = require("request");
 const Database = require("../db/config");
-
 
 
 class rechargeController {
@@ -10,7 +8,44 @@ class rechargeController {
         this.database = new Database();
     }
 
-    getTicket(){
+    getViewTransactions() {
+        return (req, res) => {
+            res.render("transactions");
+        }
+    }
+
+    getViewPanel() {
+        return (req, res) => {
+            res.render("panel");
+        }
+    }
+
+    getALLTransactions() {
+        return async (req, res) => {
+            const id = req.params.id;
+            const transaction = await this.database.getAllTicketsOfAprobacion();
+            const supplier = await this.database.getALlSuppliers();
+
+            //poner el nombre de los proveedores en el ticket
+            for (let i = 0; i < transaction.length; i++) {
+                for (let j = 0; j < supplier.length; j++) {
+                    if (transaction[i].supplier_trans_id == supplier[j].supplier_id) {
+                        transaction[i].supplierName = supplier[j].supplier_name;
+                    }
+                    transaction[i].transaction_date = transaction[i].transaction_date.toString().substring(0, 10)
+                }
+            }
+
+    
+            
+            res.status(200).json({
+                message: "Transacciones",
+                body: transaction
+            });
+        }
+    }
+
+    getTicket() {
         return (req, res) => {
             res.render("ticket");
         }
@@ -56,7 +91,7 @@ class rechargeController {
 
                             let monto = responseServer.ticket.body.Valor.replace(",", "");
                             monto = monto.replace("$", "");
-                    
+
 
 
                             const ticket = {
@@ -72,9 +107,9 @@ class rechargeController {
                             if (resultTicket) {
                                 return res.status(200).json({
                                     message: "Compra exitosa",
-                                    body : responseServer
+                                    body: responseServer
                                 });
-                        
+
                             } else {
                                 return res.status(500).send("Error generando el ticket");
                             }
