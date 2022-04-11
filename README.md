@@ -20,3 +20,8 @@
     <img src="./readme-imgs/Modelo%20Base%20de%20datos.png" width="600" height="400">
 
 4. El codigo del frontend fue desarrollado con hbs y esta dentro de la carpeta src/views y al momento de correr el servidor se redenrizan las vistas. 
+
+
+5. Documentacion de los servicios creados
+      
+       https://documenter.getpostman.com/view/19269286/UVyysCHw
