@@ -54,7 +54,7 @@ class authController {
                     } else {
                         const result = await database.insertUser(username, password);
                         if (result) {
-                            return res.res.render("panel", {
+                            return res.render("panel", {
                                 message: `Bienvenido  a Puntored, ${username}`,
                                 token: body.data.token,
                                 userId: re.user_id,

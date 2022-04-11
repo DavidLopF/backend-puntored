@@ -7,13 +7,12 @@ class PostgresConection {
     constructor() {
         try {
             this.pool = new Pool({
-
-                user: 'xgoaqvxghpezto',
-                host: 'ec2-34-194-158-176.compute-1.amazonaws.com',
-                database: 'd6516oupchpj20',
-                password: '31f28209a5418053200c9e1600245a53408dcf7b36c67f61643495b69163be4b',
+                user: "vudfovjwyhsggr",
+                password: "02fdd1071b99ab04593bcd48c0e8a5b3cd2bc934b042f272dbf3f320460946b7",
+                database: "d6588jjfpchkk9",
                 port: 5432,
-                ssl: true
+                host: "ec2-3-225-213-67.compute-1.amazonaws.com",
+                ssl: { rejectUnauthorized: false }
             });
 
         } catch (error) {
@@ -118,7 +117,7 @@ class PostgresConection {
         }
     }
 
-    async getAllTicketsOfAproacion() {
+    async getAllTicketsOfAprobacion() {
         const res = await this.pool.query(`
         SELECT *
         FROM public.TRANSACTION 
